@@ -1,0 +1,58 @@
+const char index_html[] PROGMEM = R"rawliteral(
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESP32 Web Server</title>
+    <link rel="stylesheet" href="web.css">
+    <link rel="icon" href="data:,">
+
+    <script>
+        // Hàm fetch dữ liệu từ ESP32 server
+        function fetchData() {
+            fetch('/data')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('1Value').innerText = data.row1;
+                    document.getElementById('1Value').value = data.row1;
+
+                    document.getElementById('2Value').innerText = data.row2;
+                    document.getElementById('2Value').value = data.row2;
+                })
+        }
+
+        // Gọi fetchData mỗi 1 giây
+        setInterval(fetchData, 1000);
+        fetchData(); // Gọi ngay khi trang được tải
+    </script>
+
+</head>
+
+<body>
+    <h1>ESP32 Web Server</h1>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <p>Khoảng cách:</p>
+                </td>
+                <td>
+                    <p id="1Value">Loading...</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Trạng thái:</p>
+                </td>
+                <td>
+                    <p id="2Value">Loading...</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
+)rawliteral";
